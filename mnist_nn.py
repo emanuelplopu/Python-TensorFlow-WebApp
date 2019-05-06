@@ -16,6 +16,9 @@ from keras import backend as K
 # input image dimensions
 # 28x28 pixel images. 
 img_rows, img_cols = 28, 28
+batch_size = 32
+num_classes = 10
+epochs = 12
 
 # Load the pre-shuffled MNIST dataset from keras.datasets -> Dataset of 60,000 28x28 grayscale images of 10 digits & test set of 10,000 images
 # 2 tuples ( immutable data structure/lists consisting of mulitple parts):
@@ -108,10 +111,9 @@ model.add(Dense(num_classes, activation='softmax'))
 # using adam optimizer algorithm for gradient descent
 # Loss function is the objective that the model will try to minimize
 # Add in some extra metrics - accuracy being the only one
-model.compile(optimizer="adam",
-                loss="categorical_crossentropy",
-                metrics=["accuracy"])
-
+model.compile(loss=kr.losses.categorical_crossentropy,
+              optimizer=kr.optimizers.Adadelta(),
+              metrics=['accuracy'])
 
 # Fit the model using our training data.
 # epochs is the number of times the training algorithm will iterate over the entire training set before terminating
@@ -119,8 +121,11 @@ model.compile(optimizer="adam",
 # verbose is used to log the model being trained
 # verbose=1 means verbose mode 1 which is a progress bar
 # Verbosity mode: 0 = silent, 1 = progress bar, 2 = one line per epoch.
-model.fit(x_train, y_train, batch_size=128, epochs=4, verbose=1)
-
+model.fit(x_train, y_train,
+          batch_size=batch_size,
+          epochs=epochs,
+          verbose=1,
+          validation_data=(x_test, y_test))
 # ================== TEST MODEL ==========================================================
 # Evaluate the model using the test data set.
 # model.evaluate compare answers

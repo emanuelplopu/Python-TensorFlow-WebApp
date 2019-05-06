@@ -23,7 +23,7 @@ body {
     position: relative;
     border: 8px solid;
     margin: auto;
-    margin-top: 160px;
+    margin-top: 1em;
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
@@ -33,3 +33,7 @@ body {
     position: relative;
     text-align: center;
   }
+  
+  .lock-screen {
+touch-action: none;
+}
